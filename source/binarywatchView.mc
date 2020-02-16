@@ -37,7 +37,11 @@ class binarywatchView extends WatchUi.WatchFace {
     	
     	// Get time
         var clockTime = System.getClockTime();
-        var hr = clockTime.hour % 12; // force 12 hour clock
+        var hr = clockTime.hour;
+        // I want a 12 hour clock, but with midnight=0 and midday=12. Deal with it.
+        if (hr > 12) {
+            hr -= 12;
+        }
         var mins = clockTime.min;
         
         // Work around bug only on device (not simulator) where drawCircle'd circles appear but
