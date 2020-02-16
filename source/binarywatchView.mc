@@ -40,8 +40,9 @@ class binarywatchView extends WatchUi.WatchFace {
         var hr = clockTime.hour % 12; // force 12 hour clock
         var mins = clockTime.min;
         
-        // Clear screen, trying to get around device bug where filled circles
-        // don't appear
+        // Work around bug only on device (not simulator) where drawCircle'd circles appear but
+        // fillCircle's ones don't.
+        // Setting color both before and after clearing the screen fixes it.
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.clear();
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
@@ -51,7 +52,7 @@ class binarywatchView extends WatchUi.WatchFace {
 		    var x = right - (width / 3) * i;
 		    var y = mid - voffset;
 		    if (getBinaryDigit(hr, Math.pow(2, i).toNumber())) {
-		        dc.fillCircle(x, y, circleSize); // fillCircle works on simulator; does nothing on device
+		        dc.fillCircle(x, y, circleSize);
 		    }
 		    else {
 		        dc.drawCircle(x, y, circleSize);
@@ -63,9 +64,7 @@ class binarywatchView extends WatchUi.WatchFace {
 		    var x = right - (width / 5) * i;
 		    var y = mid + voffset;
 		    if (getBinaryDigit(mins, Math.pow(2, i).toNumber())) {
-//		        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_RED);
 		        dc.fillCircle(x, y, circleSize);
-//		        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
 		    }
 		    else {
 		        dc.drawCircle(x, y, circleSize);
