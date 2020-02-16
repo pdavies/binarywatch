@@ -20,10 +20,6 @@ class binarywatchView extends WatchUi.WatchFace {
     // loading resources into memory.
     function onShow() {
     }
-    
-    function getBinaryDigit(num, digit_value) {
-        return num & digit_value > 0 ? 1 : 0;
-    }
 
     // Update the view
     function onUpdate(dc) {
@@ -55,7 +51,7 @@ class binarywatchView extends WatchUi.WatchFace {
 		for (var i = 0; i < 4; i++) {
 		    var x = right - (width / 3) * i;
 		    var y = mid - voffset;
-		    if (getBinaryDigit(hr, Math.pow(2, i).toNumber())) {
+		    if (hr & Math.pow(2, i).toNumber()) {
 		        dc.fillCircle(x, y, circleSize);
 		    }
 		    else {
@@ -67,7 +63,7 @@ class binarywatchView extends WatchUi.WatchFace {
 		for (var i = 0; i < 6; i++) {
 		    var x = right - (width / 5) * i;
 		    var y = mid + voffset;
-		    if (getBinaryDigit(mins, Math.pow(2, i).toNumber())) {
+		    if (mins & Math.pow(2, i).toNumber()) {
 		        dc.fillCircle(x, y, circleSize);
 		    }
 		    else {
