@@ -78,14 +78,26 @@ class binarywatchView extends WatchUi.WatchFace {
 
         // Show battery indicator
         var batt = System.getSystemStats().battery;
-        if (batt > 50) {
-            drawBatteryText("go go", Graphics.COLOR_GREEN, dc);
-        }
-        else if (batt > 20) {
-            drawBatteryText("so so", Graphics.COLOR_YELLOW, dc);
-        }
-        else {
-            drawBatteryText("oh no", Graphics.COLOR_RED, dc);
+        if (batt <= 20) {
+            var hsize = 20; // Battery body width
+            var vsize = 10; // Battery body height
+            var ytop = w * 0.8; // y coord of top of battery
+            var xleft = mid - hsize / 2; // x coord of left of battery
+
+            // Battery outline
+            dc.drawRectangle(xleft, ytop, hsize, vsize);
+
+            // Battery pointy bit
+            dc.fillRectangle(mid + hsize / 2, ytop + 2, 2, vsize - 4);
+
+            // Battery fill
+            if (batt <= 10) {
+                dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_TRANSPARENT);
+            }
+            else {
+                dc.setColor(Graphics.COLOR_YELLOW, Graphics.COLOR_TRANSPARENT);
+            }
+            dc.fillRectangle(xleft + 2, ytop + 2, hsize - 4, vsize - 4);
         }
 
     }
