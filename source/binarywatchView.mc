@@ -21,20 +21,17 @@ class binarywatchView extends WatchUi.WatchFace {
     function onShow() {
     }
 
-    function drawBatteryText(text, color, dc) {
-        dc.setColor(color, Graphics.COLOR_BLACK);
-        dc.drawText(dc.getWidth() / 2, 170, Graphics.FONT_SMALL, text, Graphics.TEXT_JUSTIFY_CENTER);
-    }
-
     // Update the view
     function onUpdate(dc) {
-        // Calculate where to put things
-        var w = dc.getWidth(); // Screen width
-        var mid = w / 2;
-        var voffset = 25; // Each line's vertical offset from centre
-        var width = 165; // Width of row of dots (from centre of endmost circles)
-        var right = width / 2 + mid; // x coord of rightmost circle
-        var circleSize = 15;
+        // Learn about screen resolution
+        var screenw = dc.getWidth(); var screenh = dc.getHeight();
+        var xmid = screenw / 2; var ymid = screenh / 2;
+
+        // Calculate where to put clock circles
+        var voffset = screenw / 8; // Each line's vertical offset from centre
+        var dotswidth = screenw * 0.8; // Width of row of dots (from centre of endmost circles)
+        var right = dotswidth / 2 + xmid; // x coord of rightmost circle
+        var circleSize = screenw * 0.072;
         
         // Work around bug only on device (not simulator) where drawCircle'd circles appear but
         // fillCircle's ones don't.
@@ -58,11 +55,11 @@ class binarywatchView extends WatchUi.WatchFace {
         }
         var mins = clockTime.min;
         
-        var hoursCircles = is24 ? 5 : 4;
         // Draw circles for hours
+        var hoursCircles = is24 ? 5 : 4;
         for (var i = 0; i < hoursCircles; i++) {
-            var x = right - (width / (hoursCircles - 1)) * i;
-            var y = mid - voffset;
+            var x = right - (dotswidth / (hoursCircles - 1)) * i;
+            var y = ymid - voffset;
             if (hr & Math.pow(2, i).toNumber()) {
                 dc.fillCircle(x, y, circleSize);
             }
@@ -70,11 +67,11 @@ class binarywatchView extends WatchUi.WatchFace {
                 dc.drawCircle(x, y, circleSize);
             }
         }
-        
+
         // Draw circles for minutes
         for (var i = 0; i < 6; i++) {
-            var x = right - (width / 5) * i;
-            var y = mid + voffset;
+            var x = right - (dotswidth / 5) * i;
+            var y = ymid + voffset;
             if (mins & Math.pow(2, i).toNumber()) {
                 dc.fillCircle(x, y, circleSize);
             }
@@ -83,19 +80,23 @@ class binarywatchView extends WatchUi.WatchFace {
             }
         }
 
+        if (settings.notificationCount > -1) {
+            dc.drawText(xmid, screenh * 0.10, Graphics.FONT_MEDIUM, "!", Graphics.TEXT_JUSTIFY_CENTER);
+        }
+
         // Show battery indicator
         var batt = System.getSystemStats().battery;
         if (batt <= 20) {
             var hsize = 20; // Battery body width
             var vsize = 10; // Battery body height
-            var ytop = w * 0.8; // y coord of top of battery
-            var xleft = mid - hsize / 2; // x coord of left of battery
+            var ytop = screenh * 0.8; // y coord of top of battery
+            var xleft = xmid - hsize / 2; // x coord of left of battery
 
             // Battery outline
             dc.drawRectangle(xleft, ytop, hsize, vsize);
 
             // Battery pointy bit
-            dc.fillRectangle(mid + hsize / 2, ytop + 2, 2, vsize - 4);
+            dc.fillRectangle(xmid + hsize / 2, ytop + 2, 2, vsize - 4);
 
             // Battery fill
             if (batt <= 10) {
