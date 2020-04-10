@@ -33,8 +33,8 @@ class binarywatchView extends WatchUi.WatchFace {
         var right = dotswidth / 2 + xmid; // x coord of rightmost circle
         var circleSize = screenw * 0.072;
         
-        // Work around bug only on device (not simulator) where drawCircle'd circles appear but
-        // fillCircle's ones don't.
+        // Work around bug only on 45S (not simulator) where drawCircle circles appear but
+        // fillCircle ones don't.
         // Setting color both before and after clearing the screen fixes it.
         dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         dc.clear();
@@ -81,15 +81,24 @@ class binarywatchView extends WatchUi.WatchFace {
         }
 
         if (settings.notificationCount > -1) {
-            dc.drawText(xmid, screenh * 0.10, Graphics.FONT_MEDIUM, "!", Graphics.TEXT_JUSTIFY_CENTER);
+            var speechBubbleYOffset = screenh * 0.08;
+            var speechBubbleHeight = 18;
+            dc.fillRoundedRectangle(xmid - 13, speechBubbleYOffset, 26, speechBubbleHeight, 2);
+            var bottomOfSpeechBubble = speechBubbleYOffset + speechBubbleHeight;
+            dc.fillPolygon([[xmid, bottomOfSpeechBubble], [xmid - 9, bottomOfSpeechBubble], [xmid - 9, bottomOfSpeechBubble + 4]]);
+            dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+            dc.fillCircle(xmid - 5, speechBubbleYOffset + speechBubbleHeight / 2, 1);
+            dc.fillCircle(xmid    , speechBubbleYOffset + speechBubbleHeight / 2, 1);
+            dc.fillCircle(xmid + 5, speechBubbleYOffset + speechBubbleHeight / 2, 1);
+            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
         }
 
         // Show battery indicator
         var batt = System.getSystemStats().battery;
         if (batt <= 20) {
             var hsize = 20; // Battery body width
-            var vsize = 10; // Battery body height
-            var ytop = screenh * 0.8; // y coord of top of battery
+            var vsize = 12; // Battery body height
+            var ytop = screenh * 0.85; // y coord of top of battery
             var xleft = xmid - hsize / 2; // x coord of left of battery
 
             // Battery outline
