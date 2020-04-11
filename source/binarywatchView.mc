@@ -80,7 +80,7 @@ class binarywatchView extends WatchUi.WatchFace {
             }
         }
 
-        if (settings.notificationCount > -1) {
+        if (settings.notificationCount >= 1) {
             var speechBubbleYOffset = screenh * 0.08;
             var speechBubbleHeight = 18;
             dc.fillRoundedRectangle(xmid - 13, speechBubbleYOffset, 26, speechBubbleHeight, 2);
