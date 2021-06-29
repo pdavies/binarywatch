@@ -116,7 +116,6 @@ class binarywatchView extends WatchUi.WatchFace {
             }
             dc.fillRectangle(xleft + 2, ytop + 2, hsize - 4, vsize - 4);
         }
-
     }
 
     // Called when this View is removed from the screen. Save the
