@@ -4,6 +4,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.4.0] - 2023-06-18
+
+- Support more devices
+- Scale battery icon (poorly) so it's not tiny on higher resolution devices
+
 ## [1.2.0] - 2021-05-23
 
 ### Added
@@ -15,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Support for more devices, including 
+- Support for more devices, including
 
 ## [1.0.0] - 2017-06-20
 
@@ -73,6 +78,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.2...v0.0.3
 [0.0.2]:
   https://github.com/olivierlacan/keep-a-changelog/compare/v0.0.1...v0.0.2
-[0.0.1]: https://github.com/olivierlacan/keep-a-changelog/releases/tag/v0.0.1
 
 What is a changelog?
