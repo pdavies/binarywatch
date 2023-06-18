@@ -96,8 +96,10 @@ class binarywatchView extends WatchUi.WatchFace {
         // Show battery indicator
         var batt = System.getSystemStats().battery;
         if (batt <= 20) {
-            var hsize = 20; // Battery body width
-            var vsize = 12; // Battery body height
+            var hsize = screenw / 12; // Battery body width, was 20 for FR45
+            // Make width even so it can be centred so we can easily align the pointy bit
+            if (hsize % 2 == 1) { hsize -= 1; }
+            var vsize = screenw / 17; // Battery body height, was 12 for FR45
             var ytop = screenh * 0.85; // y coord of top of battery
             var xleft = xmid - hsize / 2; // x coord of left of battery
 
@@ -105,7 +107,15 @@ class binarywatchView extends WatchUi.WatchFace {
             dc.drawRectangle(xleft, ytop, hsize, vsize);
 
             // Battery pointy bit
-            dc.fillRectangle(xmid + hsize / 2, ytop + 2, 2, vsize - 4);
+            var pointyBitIndent = hsize / 10; // Vertical indent
+            var pointyBitWidth = 2;
+            if (hsize > 240) {
+                pointyBitWidth = 3;
+            }
+            if (hsize > 360) {
+                pointyBitWidth = 4;
+            }
+            dc.fillRectangle(xmid + hsize / 2, ytop + pointyBitIndent, pointyBitWidth, vsize - 2 * pointyBitIndent);
 
             // Battery fill
             if (batt <= 10) {
