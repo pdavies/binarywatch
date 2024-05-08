@@ -4,6 +4,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.5.0] - 2024-05-08
+
+- Support more devices
+
 ## [1.4.0] - 2023-06-18
 
 - Support more devices
